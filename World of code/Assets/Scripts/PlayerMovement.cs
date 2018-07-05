@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform playerTransform = null;
+    private Animator animator = null;
 
     /// <summary>
     /// Checks if we have the required components upon startup
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         {
             playerTransform = transform;
         }
+
+        animator = playerTransform.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -36,7 +39,22 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector3 positionChange = UpdateMovement();
-        UpdateRotation(positionChange);
+        //NOTE: PositionChange.magnitude / Time.deltaTime = movementspeed
+        if (positionChange.magnitude / Time.deltaTime >= 3)
+        {
+            animator.SetBool("Running", true);
+            UpdateRotation(positionChange);
+        }
+        else
+        {
+            animator.SetBool("Running", false);
+        }
+        
+        if ((int)transform.position.x - positionChange.x != (int)transform.position.x ||
+            (int)transform.position.z - positionChange.z != (int)transform.position.z)
+        {
+            WorldGenerator.Instance.UpdateMap();
+        }
     }
 
     /// <summary>
