@@ -18,7 +18,12 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform playerTransform = null;
+    /// <summary>
+    /// Animator to animate the character
+    /// </summary>
     private Animator animator = null;
+
+    public Vector2Int playerPosition { get; private set; }
 
     /// <summary>
     /// Checks if we have the required components upon startup
@@ -53,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         if ((int)transform.position.x - positionChange.x != (int)transform.position.x ||
             (int)transform.position.z - positionChange.z != (int)transform.position.z)
         {
-            WorldGenerator.Instance.UpdateMap();
+            Map.Instance.UpdateMap();
         }
     }
 
@@ -74,9 +79,16 @@ public class PlayerMovement : MonoBehaviour
     /// <returns>The change in position used for UpdateRotation</returns>
     private Vector3 UpdateMovement()
     {
-        Vector3 positionChange = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime * Vector3.right
-            + Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime * Vector3.forward;
+        Vector3 positionChange = Input.GetAxis("Horizontal") * Vector3.right
+            + Input.GetAxis("Vertical") * Vector3.forward;
 
+        positionChange = positionChange * movementSpeed * Time.deltaTime;
+
+        //if (positionChange + playerPosition != playerPosition)
+        {
+
+        }
+        playerPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         transform.position += positionChange;
 
         return positionChange;
