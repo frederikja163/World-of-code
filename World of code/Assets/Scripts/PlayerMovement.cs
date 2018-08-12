@@ -18,18 +18,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform playerTransform = null;
-<<<<<<< HEAD:World of code/Assets/PlayerMovement.cs
-<<<<<<< HEAD:World of code/Assets/Scripts/PlayerMovement.cs
-    /// <summary>
-    /// Animator to animate the character
-    /// </summary>
     private Animator animator = null;
-=======
->>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
-
-    public Vector2Int playerPosition { get; private set; }
-=======
->>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
 
     /// <summary>
     /// Checks if we have the required components upon startup
@@ -40,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         {
             playerTransform = transform;
         }
+
+        animator = playerTransform.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -48,8 +39,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector3 positionChange = UpdateMovement();
-<<<<<<< HEAD:World of code/Assets/PlayerMovement.cs
-<<<<<<< HEAD:World of code/Assets/Scripts/PlayerMovement.cs
         //NOTE: PositionChange.magnitude / Time.deltaTime = movementspeed
         if (positionChange.magnitude / Time.deltaTime >= 3)
         {
@@ -64,14 +53,8 @@ public class PlayerMovement : MonoBehaviour
         if ((int)transform.position.x - positionChange.x != (int)transform.position.x ||
             (int)transform.position.z - positionChange.z != (int)transform.position.z)
         {
-            Map.Instance.UpdateMap();
+            WorldGenerator.Instance.UpdateMap();
         }
-=======
-        UpdateRotation(positionChange);
->>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
-=======
-        UpdateRotation(positionChange);
->>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
     }
 
     /// <summary>
@@ -91,16 +74,9 @@ public class PlayerMovement : MonoBehaviour
     /// <returns>The change in position used for UpdateRotation</returns>
     private Vector3 UpdateMovement()
     {
-        Vector3 positionChange = Input.GetAxis("Horizontal") * Vector3.right
-            + Input.GetAxis("Vertical") * Vector3.forward;
+        Vector3 positionChange = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime * Vector3.right
+            + Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime * Vector3.forward;
 
-        positionChange = positionChange * movementSpeed * Time.deltaTime;
-
-        //if (positionChange + playerPosition != playerPosition)
-        {
-
-        }
-        playerPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         transform.position += positionChange;
 
         return positionChange;
