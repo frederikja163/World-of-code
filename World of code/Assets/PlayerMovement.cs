@@ -18,10 +18,13 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform playerTransform = null;
+<<<<<<< HEAD:World of code/Assets/Scripts/PlayerMovement.cs
     /// <summary>
     /// Animator to animate the character
     /// </summary>
     private Animator animator = null;
+=======
+>>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
 
     public Vector2Int playerPosition { get; private set; }
 
@@ -34,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
         {
             playerTransform = transform;
         }
-
-        animator = playerTransform.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -44,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector3 positionChange = UpdateMovement();
+<<<<<<< HEAD:World of code/Assets/Scripts/PlayerMovement.cs
         //NOTE: PositionChange.magnitude / Time.deltaTime = movementspeed
         if (positionChange.magnitude / Time.deltaTime >= 3)
         {
@@ -60,6 +62,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Map.Instance.UpdateMap();
         }
+=======
+        UpdateRotation(positionChange);
+>>>>>>> parent of 3193f37... 7/5 lifestream:World of code/Assets/PlayerMovement.cs
     }
 
     /// <summary>
