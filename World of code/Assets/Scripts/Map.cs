@@ -3,12 +3,13 @@
 /// <summary>
 /// Generates and manages the world
 /// </summary>
-public class WorldGenerator : MonoBehaviour
+public class Map : MonoBehaviour
 {
+    #region Variables
     /// <summary>
     /// A singleton to be called by other classes
     /// </summary>
-    public static WorldGenerator Instance;
+    public static Map Instance;
 
     /// <summary>
     /// Scale of the generated map
@@ -36,7 +37,7 @@ public class WorldGenerator : MonoBehaviour
     /// Transform of player used to draw in the surrounding area
     /// </summary>
     [SerializeField]
-    private Transform player;
+    private PlayerMovement player;
 
     /// <summary>
     /// Prefab of the first tile
@@ -49,11 +50,13 @@ public class WorldGenerator : MonoBehaviour
     /// 2d array to store all tiles so we can reuse them
     /// </summary>
     private Tile[,] tiles;
+    #endregion Variables
 
+    #region Unity calls
     /// <summary>
-    /// Generates the map at the start of the game
+    /// Manages singleton
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -63,13 +66,21 @@ public class WorldGenerator : MonoBehaviour
         {
             Destroy(this);
         }
+    }
 
+    /// <summary>
+    /// Generates the map at the start of the game
+    /// </summary>
+    private void Start()
+    {
         tiles = new Tile[size.x, size.y];
 
         GenerateSeed();
         GenerateMap();
     }
+    #endregion Unity calls
 
+    #region Update and generate map
     /// <summary>
     /// Updates the map. This can be called multiple times since it dosen't instantiate any objects
     /// </summary>
@@ -79,7 +90,9 @@ public class WorldGenerator : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                UpdateTile(ref tiles[x, y], new Vector2Int(x - size.x / 2 + (int)player.position.x, y - size.y / 2 + (int)player.position.z + yOffset));
+                UpdateTile(ref tiles[x, y],
+                    new Vector2Int(x - size.x / 2 + player.mapPosition.x,
+                        y - size.y / 2 + player.mapPosition.y + yOffset));
             }
         }
     }
@@ -123,7 +136,9 @@ public class WorldGenerator : MonoBehaviour
 
         tile.SetBiome(FloatToBiome(GetPerlinNoise(position)));
     }
+    #endregion Update and generate map
 
+    #region Converters/utility
     /// <summary>
     /// Takes a float representing something from a noisemap which will be turned into a biome
     /// </summary>
@@ -154,5 +169,15 @@ public class WorldGenerator : MonoBehaviour
             seed = Random.Range(0, 100000);
         }
     }
-
+    
+    /// <summary>
+    /// Maps a world position to a map position
+    /// </summary>
+    /// <param name="worldPosition">World position to map from</param>
+    /// <returns>The position within the map</returns>
+    public static Vector2Int WorldToMapPosition(Vector3 worldPosition)
+    {
+        return new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
+    }
+    #endregion Converters/utility
 }

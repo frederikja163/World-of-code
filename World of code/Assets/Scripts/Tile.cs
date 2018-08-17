@@ -11,14 +11,16 @@ public class Tile : MonoBehaviour
         switch (biome)
         {
             case 1:
-                renderer.material.color = Color.white;
+                renderer.material.color = new Color(0f, 0.5f, 0f);
                 break;
             case 2:
-                renderer.material.color = Color.green;
+                renderer.material.color = new Color(0.1f, 0.5f, 0.1f);
                 break;
             case 3:
-                renderer.material.color = Color.blue;
+            default:
+                renderer.material.color = new Color(0.2f, 0.5f, 0.2f);
                 break;
         }
+        this.biome = biome;
     }
 }
