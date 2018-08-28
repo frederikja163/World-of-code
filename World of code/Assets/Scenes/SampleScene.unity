@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 50
-  seed: 31488
+  seed: -1
   size: {x: 31, y: 15}
   yOffset: 4
   player: {fileID: 1357955302}
