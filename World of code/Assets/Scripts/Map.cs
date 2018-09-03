@@ -50,6 +50,11 @@ public class Map : MonoBehaviour
     /// 2d array to store all tiles so we can reuse them
     /// </summary>
     private Tile[,] tiles;
+
+    public enum NoiseType
+    {
+        height, humidity
+    }
     #endregion Variables
 
     #region Unity calls
@@ -134,7 +139,7 @@ public class Map : MonoBehaviour
         tile.transform.position = new Vector3(position.x, 0, position.y);
         tile.name = "( " + position.x + ", " + position.y + ")";
 
-        tile.SetBiome(FloatToBiome(GetPerlinNoise(position)));
+        tile.SetBiome(MapPositionToBiome(position));
     }
     #endregion Update and generate map
 
@@ -144,9 +149,26 @@ public class Map : MonoBehaviour
     /// </summary>
     /// <param name="noise">Noise which will be used to turn into a biome</param>
     /// <returns>Int which represents a biome</returns>
-    private int FloatToBiome(float noise)
+    private int MapPositionToBiome(Vector2Int mapPosition)
     {
-        return (int)(noise * 4);
+        float height = GetPerlinNoise(mapPosition, NoiseType.height);
+        float humidity = GetPerlinNoise(mapPosition, NoiseType.humidity);
+             if (0f / 6f <= humidity && humidity <= 1f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 1;
+        else if (1f / 6f <= humidity && humidity <= 2f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 2;
+        else if (2f / 6f <= humidity && humidity <= 4f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 3;
+        else if (4f / 6f <= humidity && humidity <= 6f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 4;
+        else if (0f / 6f <= humidity && humidity <= 1f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 5;
+        else if (1f / 6f <= humidity && humidity <= 3f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 6;
+        else if (3f / 6f <= humidity && humidity <= 5f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 7;
+        else if (5f / 6f <= humidity && humidity <= 6f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 8;
+        else if (0f / 6f <= humidity && humidity <= 2f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 9;
+        else if (2f / 6f <= humidity && humidity <= 4f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 10;
+        else if (4f / 6f <= humidity && humidity <= 6f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 11;
+        else if (0f / 6f <= humidity && humidity <= 1f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 12;
+        else if (1f / 6f <= humidity && humidity <= 2f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 13;
+        else if (2f / 6f <= humidity && humidity <= 3f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 14;
+        else if (3f / 6f <= humidity && humidity <= 6f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 15;
+        else return -1;
     }
 
     /// <summary>
@@ -154,9 +176,10 @@ public class Map : MonoBehaviour
     /// </summary>
     /// <param name="position">Position to take noise from</param>
     /// <returns>The float of the position in the noise map</returns>
-    private float GetPerlinNoise(Vector2 position)
+    private float GetPerlinNoise(Vector2 position, NoiseType noiseType)
     {
-        return Mathf.PerlinNoise(seed + (float)position.x / scale, seed + (float)position.y / scale);
+        return Mathf.Clamp01(Mathf.PerlinNoise(position.x / scale + ((noiseType == NoiseType.height) ? seed : 0),
+            position.y / scale + ((noiseType == NoiseType.humidity) ? seed : 0)));
     }
 
     /// <summary>
