@@ -149,26 +149,11 @@ public class Map : MonoBehaviour
     /// </summary>
     /// <param name="noise">Noise which will be used to turn into a biome</param>
     /// <returns>Int which represents a biome</returns>
-    private int MapPositionToBiome(Vector2Int mapPosition)
+    private Biome MapPositionToBiome(Vector2Int mapPosition)
     {
         float height = GetPerlinNoise(mapPosition, NoiseType.height);
         float humidity = GetPerlinNoise(mapPosition, NoiseType.humidity);
-             if (0f / 6f <= humidity && humidity <= 1f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 1;
-        else if (1f / 6f <= humidity && humidity <= 2f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 2;
-        else if (2f / 6f <= humidity && humidity <= 4f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 3;
-        else if (4f / 6f <= humidity && humidity <= 6f / 6f && 0f / 4f <= height && height <= 1f / 4f) return 4;
-        else if (0f / 6f <= humidity && humidity <= 1f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 5;
-        else if (1f / 6f <= humidity && humidity <= 3f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 6;
-        else if (3f / 6f <= humidity && humidity <= 5f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 7;
-        else if (5f / 6f <= humidity && humidity <= 6f / 6f && 1f / 4f <= height && height <= 2f / 4f) return 8;
-        else if (0f / 6f <= humidity && humidity <= 2f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 9;
-        else if (2f / 6f <= humidity && humidity <= 4f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 10;
-        else if (4f / 6f <= humidity && humidity <= 6f / 6f && 2f / 4f <= height && height <= 3f / 4f) return 11;
-        else if (0f / 6f <= humidity && humidity <= 1f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 12;
-        else if (1f / 6f <= humidity && humidity <= 2f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 13;
-        else if (2f / 6f <= humidity && humidity <= 3f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 14;
-        else if (3f / 6f <= humidity && humidity <= 6f / 6f && 3f / 4f <= height && height <= 4f / 4f) return 15;
-        else return -1;
+        return BiomeManager.GetBiome(height, humidity);
     }
 
     /// <summary>
