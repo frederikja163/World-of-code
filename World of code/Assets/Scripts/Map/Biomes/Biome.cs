@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class Biome
 {
-
+    public string name;
     public float heightMin;
     public float heightMax;
     public float humidityMin;

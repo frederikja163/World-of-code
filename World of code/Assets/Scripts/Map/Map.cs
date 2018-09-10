@@ -15,7 +15,9 @@ public class Map : MonoBehaviour
     /// Scale of the generated map
     /// </summary>
     [SerializeField]
-    private float scale = 100f;
+    private float heightScale = 100f;
+    [SerializeField]
+    private float humidityScale = -100f;
     /// <summary>
     /// Seed to generate map with
     /// </summary>
@@ -163,8 +165,8 @@ public class Map : MonoBehaviour
     /// <returns>The float of the position in the noise map</returns>
     private float GetPerlinNoise(Vector2 position, NoiseType noiseType)
     {
-        return Mathf.Clamp01(Mathf.PerlinNoise(position.x / scale + ((noiseType == NoiseType.height) ? seed : 0),
-            position.y / scale + ((noiseType == NoiseType.humidity) ? seed : 0)));
+        return Mathf.Clamp01(Mathf.PerlinNoise(position.x / ((noiseType == NoiseType.height) ? heightScale: humidityScale) + seed,
+            position.y / ((noiseType == NoiseType.height) ? heightScale : humidityScale) + seed));
     }
 
     /// <summary>
