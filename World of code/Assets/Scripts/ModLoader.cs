@@ -22,8 +22,9 @@ public class ModLoader : MonoBehaviour
     /// <param name="filePath">path to load from</param>
     private void LoadProps(string filePath)
     {
-        string jsonRaw = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, filePath));
-        PropDefinition prop = JsonUtility.FromJson<PropDefinition>(jsonRaw);
+        var jsonraw = File.ReadAllText(Application.streamingAssetsPath + "\\" + filePath);
+        var prop = JsonUtility.FromJson<PropDefinition>(jsonraw);
+
         Instantiate(prop.GetGameObject(), new Vector3(0, 0, 5), Quaternion.identity);
     }
 
@@ -33,7 +34,9 @@ public class ModLoader : MonoBehaviour
     /// <param name="filePath">path to load from</param>
     public void LoadBiome(string filePath)
     {
-        string jsonRaw = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, filePath));
-        BiomeManager.AddCollection(JsonUtility.FromJson<BiomeCollection>(jsonRaw));
+        Debug.Log(JsonUtility.ToJson(new Biome(0, 1, 0, 1, Color.cyan) { name = "Dessert" }));
+        JsonUtility.FromJson<Biome>("{\"name\":\"Dessert\",\"humidityMin\":0.2,\"humidityMax\":0.4,\"heightMin\":0.0,\"heightMax\":0.6,\"color\":{\"r\":1.0, \"g\":0.85, \"b\":0.15, \"a\":1.0}}");
+
+        BiomeManager.AddBiome(FileLoader.LoadJson<Biome>(Application.streamingAssetsPath + "\\" + filePath));
     }
 }

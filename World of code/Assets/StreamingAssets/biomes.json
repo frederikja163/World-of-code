@@ -1,6 +1,4 @@
-{
-	"biomes":
-	[
+
 		{
 			"name":"Dessert",
 			"humidityMin":0.2,
@@ -73,6 +71,3 @@
 			"heightMax":0.4,
 			"color":{"r":0.2, "g":1.0, "b":0.18,"a":1.0}
 		}
-
-	]
-}

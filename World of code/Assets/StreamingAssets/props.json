@@ -1,6 +1,6 @@
 {
 	"name":"oak_tree",
-	"objPath":"oakTree.obj",
-	"texturePath":"Oak.png",
+	"objPath":"props/trees/oak.obj",
+	"texturePath":"props/trees/oak.png",
 	"collision":true
 }

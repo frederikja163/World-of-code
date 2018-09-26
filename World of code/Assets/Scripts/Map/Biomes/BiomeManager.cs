@@ -8,15 +8,15 @@ public static class BiomeManager
     /// <summary>
     /// Collections of biomes, this collections stores the definition of all biomes.
     /// </summary>
-    private static List<BiomeCollection> collections = new List<BiomeCollection>();
+    private static List<Biome> biomes = new List<Biome>();
     
     /// <summary>
     /// Add a new collection to the collection list
     /// </summary>
-    /// <param name="biomeCollection">Collection to add to the list of collections</param>
-    public static void AddCollection(BiomeCollection biomeCollection)
+    /// <param name="biomes">Biome to add to the list of collections</param>
+    public static void AddBiome(params Biome[] biomes)
     {
-        collections.Add(biomeCollection);
+        BiomeManager.biomes.AddRange(biomes);
     }
 
     /// <summary>
@@ -27,12 +27,11 @@ public static class BiomeManager
     /// <returns>Found biome or null if none found</returns>
     public static Biome GetBiome(float height, float humidity)
     {
-        for (int i = 0; i < collections.Count; i++)
+        for (int i = 0; i < biomes.Count; i++)
         {
-            Biome biome = collections[i].FindBiome(x => x.WithinRange(height, humidity));
-            if (biome != null)
+            if (biomes[i].WithinRange(height, humidity))
             {
-                return biome;
+                return biomes[i];
             }
         }
         return null;
