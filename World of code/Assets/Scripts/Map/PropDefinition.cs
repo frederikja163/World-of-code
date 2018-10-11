@@ -78,6 +78,7 @@ public class PropDefinition
         {
             prop.AddComponent<Collider>();
         }
+        prop.transform.position = Vector3.up * 100;
         prop.name = name;
 
         SetNull();

@@ -9,5 +9,11 @@
 		"name":"stakit",
 		"objPath":"props/Stakit.obj",
 		"collision":false
+	},
+	{
+		"name":"cube",
+		"objPath":"props/cube.obj",
+		"texturePath":"props/cube.png",
+		"collision":false
 	}
 ]

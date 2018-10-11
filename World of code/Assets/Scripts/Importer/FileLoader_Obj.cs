@@ -347,7 +347,7 @@ public static partial class FileLoader
         {
             GameObject subObject = new GameObject(obj);
             subObject.transform.parent = parentObject.transform;
-            subObject.transform.localScale = new Vector3(-0.1f, 0.1f, 0.1f);
+            subObject.transform.localScale = new Vector3(-0.01f, 0.01f, 0.01f);
             //Create mesh
             Mesh m = new Mesh();
             m.name = obj;

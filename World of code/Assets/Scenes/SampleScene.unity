@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43846658, g: 0.486551, b: 0.5668269, a: 1}
+  m_IndirectSpecularColor: {r: 0.4384671, g: 0.48655152, b: 0.5668277, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -277,8 +277,8 @@ Camera:
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0.38888884, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -396,9 +396,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heightScale: 100
   humidityScale: -75
+  floraScale: 2
+  tileScale: 1.5
   seed: -1
-  size: {x: 31, y: 15}
-  yOffset: 4
+  size: {x: 33, y: 17}
+  yOffset: 3
   player: {fileID: 1357955302}
   tilePrefab: {fileID: 114082441258771048, guid: 437cd08e6d7ef1f4e85d396f1de64fb5,
     type: 2}
