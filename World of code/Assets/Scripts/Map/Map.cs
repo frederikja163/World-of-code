@@ -18,6 +18,10 @@ public class Map : MonoBehaviour
     private float heightScale = 100f;
     [SerializeField]
     private float humidityScale = -100f;
+    [SerializeField]
+    private float floraScale = 2;
+    [SerializeField]
+    private float tileScale = 1.5f;
     /// <summary>
     /// Seed to generate map with
     /// </summary>
@@ -55,7 +59,7 @@ public class Map : MonoBehaviour
 
     public enum NoiseType
     {
-        height, humidity
+        height, humidity, flora, tile
     }
     #endregion Variables
 
@@ -141,7 +145,8 @@ public class Map : MonoBehaviour
         tile.transform.position = new Vector3(position.x, 0, position.y);
         tile.name = "( " + position.x + ", " + position.y + ")";
 
-        tile.SetBiome(MapPositionToBiome(position));
+        tile.SetBiome(MapPositionToBiome(position), GetPerlinNoise(position, NoiseType.tile));
+        tile.SetFlora(GetPerlinNoise(position, NoiseType.flora));
     }
     #endregion Update and generate map
 
@@ -155,7 +160,7 @@ public class Map : MonoBehaviour
     {
         float height = GetPerlinNoise(mapPosition, NoiseType.height);
         float humidity = GetPerlinNoise(mapPosition, NoiseType.humidity);
-        return BiomeManager.GetBiome(height, humidity);
+        return AssetManager<Biome>.FindObj(x => x.WithinRange(height, humidity));
     }
 
     /// <summary>
@@ -165,8 +170,26 @@ public class Map : MonoBehaviour
     /// <returns>The float of the position in the noise map</returns>
     private float GetPerlinNoise(Vector2 position, NoiseType noiseType)
     {
-        return Mathf.Clamp01(Mathf.PerlinNoise(position.x / ((noiseType == NoiseType.height) ? heightScale: humidityScale) + seed,
-            position.y / ((noiseType == NoiseType.height) ? heightScale : humidityScale) + seed));
+        Vector2 perlPos = Vector2.zero;
+        switch (noiseType)
+        {
+            case NoiseType.height:
+                perlPos = new Vector2(position.x / heightScale + seed, position.y / heightScale + seed);
+                break;
+            case NoiseType.humidity:
+                perlPos = new Vector2(position.x / humidityScale + seed, position.y / humidityScale + seed);
+                break;
+            case NoiseType.flora:
+                perlPos = new Vector2(position.x / floraScale + seed, position.y / floraScale + seed);
+                break;
+            case NoiseType.tile:
+                perlPos = new Vector2(position.x / tileScale + seed, position.y / tileScale + seed);
+                break;
+            default:
+                break;
+        }
+
+        return Mathf.Clamp01(Mathf.PerlinNoise(perlPos.x, perlPos.y));
     }
 
     /// <summary>

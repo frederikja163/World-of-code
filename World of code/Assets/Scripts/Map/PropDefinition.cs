@@ -45,6 +45,10 @@ public class PropDefinition
         this.collision = collision;
     }
 
+    /// <summary>
+    /// Get the GameObject of this prop
+    /// </summary>
+    /// <returns>Gameobject of this prop</returns>
     public GameObject GetGameObject()
     {
         if (prop != null)
@@ -52,14 +56,39 @@ public class PropDefinition
             return prop;
         }
 
-        prop = FileLoader.LoadOBJFile(Path.Combine(Application.streamingAssetsPath, objPath));
-        prop.GetComponentInChildren<Renderer>().material.mainTexture = FileLoader.LoadTexture(Path.Combine(Application.streamingAssetsPath, texturePath));
+        CreateGameObject();
+
+        return prop;
+    }
+
+    /// <summary>
+    /// Create a GameObject if none exists so we can instantiate it
+    /// </summary>
+    private void CreateGameObject()
+    {
+        if (objPath != null)
+        {
+            prop = FileLoader.LoadOBJFile(Path.Combine(Application.streamingAssetsPath, objPath));
+        }
+        if (texturePath != null)
+        {
+            prop.GetComponentInChildren<Renderer>().material.mainTexture = FileLoader.LoadTexture(Path.Combine(Application.streamingAssetsPath, texturePath));
+        }
         if (collision)
         {
-            prop.AddComponent<Collider>().position = new Vector2Int(0, 5);
+            prop.AddComponent<Collider>();
         }
         prop.name = name;
 
-        return prop;
+        SetNull();
+    }
+
+    /// <summary>
+    /// Set all variables to null so we can save memory
+    /// </summary>
+    private void SetNull()
+    {
+        objPath = null;
+        texturePath = null;
     }
 }

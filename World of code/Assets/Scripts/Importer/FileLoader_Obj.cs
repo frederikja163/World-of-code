@@ -419,7 +419,6 @@ public static partial class FileLoader
                 m.RecalculateNormals();
             }
             m.RecalculateBounds();
-            ;
 
             MeshFilter mf = subObject.AddComponent<MeshFilter>();
             MeshRenderer mr = subObject.AddComponent<MeshRenderer>();

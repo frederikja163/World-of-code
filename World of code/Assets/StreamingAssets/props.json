@@ -1,6 +1,13 @@
-{
-	"name":"oak_tree",
-	"objPath":"props/trees/oak.obj",
-	"texturePath":"props/trees/oak.png",
-	"collision":true
-}
+[
+	{
+		"name":"oak_tree",
+		"objPath":"props/trees/oak.obj",
+		"texturePath":"props/trees/oak.png",
+		"collision":true
+	},
+	{
+		"name":"stakit",
+		"objPath":"props/Stakit.obj",
+		"collision":false
+	}
+]

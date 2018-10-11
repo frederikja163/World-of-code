@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightScale: 100
-  humidityScale: -100
+  humidityScale: -75
   seed: -1
   size: {x: 31, y: 15}
   yOffset: 4
